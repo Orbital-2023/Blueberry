@@ -21,7 +21,7 @@ export const getEvent = async (req: Request, res: Response) => {
       "groupExpansionMax": 10,
       "items": [
         {
-          "id": "tanyunchao@gmail.com"
+          "id": process.env.DUMMY_EMAIL
         }
       ],
       "timeMin": "2023-05-01T00:00:00+08:00",
@@ -31,10 +31,9 @@ export const getEvent = async (req: Request, res: Response) => {
 
     try {
         const calendar = google.calendar({ version: "v3", auth: process.env.GOOGLE_API_KEY });
-        console.log(process.env.GOOGLE_API_KEY)
         const response = await calendar.freebusy.query({requestBody});
-        res.json(response)
-    } catch (e) {
-        console.log("Met with error: " + e);
+        res.status(200).json(response)
+    } catch (e: any) {
+        res.status(400).json({e: e.mesage})
     }
   }
