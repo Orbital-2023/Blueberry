@@ -19,6 +19,7 @@ const calendar = google.calendar({
   version: "v3",
 });
 
+app.use(express.json())
 app.use('/', routes)
 
 // connect to db
