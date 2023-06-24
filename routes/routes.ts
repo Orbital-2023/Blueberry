@@ -1,6 +1,7 @@
 import express from "express"
 const router = express.Router()
 import { dummyData } from "..";
+import { createMeeting } from "../controllers/controllers";
 
 // routes
 router.get("/", (req, res) => {
@@ -34,5 +35,7 @@ router.get("/api/calendar/events", async (req, res) => {
 router.get("/api/calendar/dummy", async(req, res) => {
   res.json(dummyData);
 });
+
+router.post("/api/meeting/create", createMeeting)
 
 export default router
