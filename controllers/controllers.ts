@@ -39,3 +39,17 @@ export const getEvent = async (req: Request, res: Response) => {
       res.status(400).json({e: e.mesage})
   }
 }
+
+export const passwordCheck = async (req: Request, res: Response) => {
+  const {roomId, roomPassword} = req.body
+
+  const check = await MeetingCode.find({ roomId: roomId, roomPassword: roomPassword})
+
+  console.log(check.length)
+
+  if (check.length != 0) {
+    res.status(200).json("success")
+  }
+
+  res.status(404).json("username or password is wrong")
+}
