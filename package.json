@@ -25,7 +25,7 @@
     "concurrently": "^8.0.1",
     "google-auth-library": "^8.8.0",
     "node-fetch": "^2.6.6",
-    "nodemon": "^2.0.22",
+    "nodemon": "^1.14.9",
     "typescript": "^5.0.4"
   }
 }
