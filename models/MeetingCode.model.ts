@@ -7,8 +7,8 @@ export interface IMeetCode extends Document {
 }
 
 const MeetingCodeSchema: Schema = new Schema({
-    code: {type: String, required: true},
-    owner: {type: String, required: true},
+    roomId: {type: String, required: true},
+    roomPassword: {type: String, required: true},
     emails: {type: String, required: true},
 }, {timestamps: true})
 
