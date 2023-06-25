@@ -1,6 +1,50 @@
 import { Request, Response } from "express";
 import { MeetingCodeModel as MeetingCode }  from "../models/MeetingCode.model";
 import { google } from 'googleapis';
+import { Error } from "mongoose";
+
+interface BusyEvent {
+  start: string;
+  end: string;
+}
+
+interface BusySchedule {
+  [email: string]: {
+    busy: BusyEvent[];
+  };
+}
+
+function formatTime(timeStr: string): string {
+  const time = new Date(timeStr);
+  return time.toLocaleString('en-US', { hour: 'numeric', hour12: true }).toLowerCase();
+}
+
+function convertToDayArray(schedule: BusySchedule): Record<string, string[]> {
+  const daysSchedule: Record<string, string[]> = {
+    Mon: [],
+    Tue: [],
+    Wed: [],
+    Thu: [],
+    Fri: [],
+    Sat: [],
+    Sun: [],
+  };
+
+  for (const email in schedule) {
+    const details = schedule[email];
+    for (const event of details.busy) {
+      const start = formatTime(event.start);
+      const end = formatTime(event.end);
+
+      const dayOfWeek = new Date(event.start).toLocaleString('en-US', { weekday: 'short' });
+      const dayKey = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1);
+
+      daysSchedule[dayKey].push(start, end);
+    }
+  }
+
+  return daysSchedule;
+}
 
 // create a new meeting code 
 export const createMeeting =  async (req: Request, res: Response) => {
@@ -34,7 +78,16 @@ export const getEvent = async (req: Request, res: Response) => {
   try {
       const calendar = google.calendar({ version: "v3", auth: process.env.GOOGLE_API_KEY });
       const response = await calendar.freebusy.query({requestBody});
-      res.status(200).json(response.data.calendars)
+
+      if (response.data.calendars == null) {
+        throw Error
+      }
+
+      const schedule: BusySchedule = response.data.calendars as BusySchedule
+
+      const daysSchedule = convertToDayArray(schedule)
+      res.status(200).json(daysSchedule)
+
   } catch (e: any) {
       res.status(400).json({e: e.mesage})
   }
