@@ -4,7 +4,7 @@ import { dummyData } from "..";
 import { createMeeting, getEvent, passwordCheck } from "../controllers/controllers";
 
 // routes
-router.get("/", (req, res) => {
+router.get("/api/", (req, res) => {
   res.json("Hello world");
 });
 
