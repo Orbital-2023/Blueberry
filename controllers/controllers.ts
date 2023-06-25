@@ -98,8 +98,6 @@ export const passwordCheck = async (req: Request, res: Response) => {
 
   const check = await MeetingCode.find({ roomId: roomId, roomPassword: roomPassword})
 
-  console.log(check.length)
-
   if (check.length != 0) {
     res.status(200).json("success")
   }
