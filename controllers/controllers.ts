@@ -34,7 +34,7 @@ export const getEvent = async (req: Request, res: Response) => {
   try {
       const calendar = google.calendar({ version: "v3", auth: process.env.GOOGLE_API_KEY });
       const response = await calendar.freebusy.query({requestBody});
-      res.status(200).json(response)
+      res.status(200).json(response.data.calendars)
   } catch (e: any) {
       res.status(400).json({e: e.mesage})
   }
