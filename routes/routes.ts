@@ -14,6 +14,8 @@ router.get("/api/calendar/dummy", async(req, res) => {
   res.json(dummyData);
 });
 
-router.post("/api/meeting/create", createMeeting)
+router.post("/api/meeting/create", createMeeting) // deprecate later
+
+router.post("/api/register", createMeeting)
 
 export default router
