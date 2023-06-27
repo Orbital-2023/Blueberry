@@ -16,7 +16,7 @@ interface BusySchedule {
 
 function formatTime(timeStr: string): string {
   const time = new Date(timeStr);
-  return time.toLocaleString('en-US', { hour: 'numeric', hour12: true }).toLowerCase().toLowerCase().replace(/\s/g, '');
+  return time.toLocaleString('en-US', { hour: 'numeric', hour12: true, timeZone: 'UTC'}).toLowerCase().toLowerCase().replace(/\s/g, '');
 }
 
 function convertToDayArray(schedule: BusySchedule): Record<string, string[]> {
@@ -69,8 +69,8 @@ export const getEvent = async (req: Request, res: Response) => {
 
   const requestBody = {
     "items": items,
-    "timeMin": "2023-06-25T00:00:00+08:00",
-    "timeMax": "2023-07-01T00:00:00+08:00",
+    "timeMin": "2023-06-26T22:42:59+08:00",
+    "timeMax": "2023-07-02T22:42:59+08:00",
     "timeZone": "Asia/Singapore"
   }
 
@@ -86,6 +86,37 @@ export const getEvent = async (req: Request, res: Response) => {
 
       const daysSchedule = convertToDayArray(schedule)
       res.status(200).json(daysSchedule)
+
+  } catch (e: any) {
+      res.status(400).json({e: e.mesage})
+  }
+}
+
+export const getRaw = async (req: Request, res: Response) => {
+  const emails = process.env.TEST_EMAILS!.split(", ");
+
+  const items = emails.map((email) => {
+      return {
+        id: email,
+      };
+  });
+
+  const requestBody = {
+    "items": items,
+    "timeMin": "2023-06-26T22:42:59+08:00",
+    "timeMax": "2023-07-02T22:42:59+08:00",
+    "timeZone": "Asia/Singapore"
+  }
+
+  try {
+      const calendar = google.calendar({ version: "v3", auth: process.env.GOOGLE_API_KEY });
+      const response = await calendar.freebusy.query({requestBody});
+
+      if (response.data.calendars == null) {
+        throw Error
+      }
+
+      res.status(200).json(response.data.calendars)
 
   } catch (e: any) {
       res.status(400).json({e: e.mesage})
