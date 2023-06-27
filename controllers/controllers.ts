@@ -16,7 +16,7 @@ interface BusySchedule {
 
 function formatTime(timeStr: string): string {
   const time = new Date(timeStr);
-  return time.toLocaleString('en-US', { hour: 'numeric', hour12: true }).toLowerCase();
+  return time.toLocaleString('en-US', { hour: 'numeric', hour12: true }).toLowerCase().toLowerCase().replace(/\s/g, '');
 }
 
 function convertToDayArray(schedule: BusySchedule): Record<string, string[]> {
@@ -42,7 +42,6 @@ function convertToDayArray(schedule: BusySchedule): Record<string, string[]> {
       daysSchedule[dayKey].push(start, end);
     }
   }
-
   return daysSchedule;
 }
 
