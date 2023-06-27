@@ -104,3 +104,7 @@ export const passwordCheck = async (req: Request, res: Response) => {
 
   res.status(404).json("username or password is wrong")
 }
+
+export const getHello = (req: Request, res: Response) => {
+  res.json("Hello world")
+}

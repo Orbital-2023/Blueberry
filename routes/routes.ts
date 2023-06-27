@@ -1,12 +1,10 @@
 import express from "express"
 const router = express.Router()
 import { dummyData } from "..";
-import { createMeeting, getEvent, passwordCheck } from "../controllers/controllers";
+import { createMeeting, getEvent, getHello, passwordCheck } from "../controllers/controllers";
 
 // routes
-router.get("/api/hello", (req, res) => {
-  res.json("Hello world");
-});
+router.get("/api/hello", getHello)
 
 router.get("/api/calendar/events", getEvent);
 
