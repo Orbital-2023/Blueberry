@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { MeetingCodeModel as MeetingCode }  from "../models/MeetingCode.model";
 import { google } from 'googleapis';
 import { Error } from "mongoose";
+import MagicCalculation from "./helperFn";
 
 interface BusyEvent {
   start: string;
@@ -116,7 +117,7 @@ export const getRaw = async (req: Request, res: Response) => {
         throw Error
       }
 
-      res.status(200).json(response.data.calendars)
+      res.status(200).json(MagicCalculation(response.data.calendars as BusySchedule))
 
   } catch (e: any) {
       res.status(400).json({e: e.mesage})
