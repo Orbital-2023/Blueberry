@@ -59,7 +59,7 @@ export const createMeeting =  async (req: Request, res: Response) => {
     
 }
 
-export const getEvent = async (req: Request, res: Response) => {
+export const deprecatedGetEvents = async (req: Request, res: Response) => {
   const emails = process.env.TEST_EMAILS!.split(", ");
 
   const items = emails.map((email) => {
@@ -93,7 +93,7 @@ export const getEvent = async (req: Request, res: Response) => {
   }
 }
 
-export const getRaw = async (req: Request, res: Response) => {
+export const getEvents = async (req: Request, res: Response) => {
   const emails = process.env.TEST_EMAILS!.split(", ");
 
   const items = emails.map((email) => {
