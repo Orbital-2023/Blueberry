@@ -59,6 +59,7 @@ export const createMeeting =  async (req: Request, res: Response) => {
     
 }
 
+// deprecated, dont use anymore
 export const deprecatedGetEvents = async (req: Request, res: Response) => {
   const emails = process.env.TEST_EMAILS!.split(", ");
 
@@ -124,6 +125,7 @@ export const getEvents = async (req: Request, res: Response) => {
   }
 }
 
+// password equality check for login
 export const passwordCheck = async (req: Request, res: Response) => {
   const {roomId, roomPassword} = req.body
 
@@ -137,11 +139,14 @@ export const passwordCheck = async (req: Request, res: Response) => {
   res.status(404).json("username or password is wrong")
 }
 
+
+// trial function
 export const getHello = (req: Request, res: Response) => {
   res.json("Hello world")
 }
 
 // appends an email in the body into the database given the right roomId and passoword
+// doubles as login endpoint since same functionality
 export const appendEmail =  async (req: Request, res: Response) => {
 
   const {roomId, roomPassword, email} = req.body
