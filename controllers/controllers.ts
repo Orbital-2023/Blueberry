@@ -146,13 +146,12 @@ export const getHello = (req: Request, res: Response) => {
 }
 
 // appends an email in the body into the database given the right roomId and passoword
-// doubles as login endpoint since same functionality
 export const appendEmail =  async (req: Request, res: Response) => {
 
-  const {roomId, roomPassword, email} = req.body
+  const {roomId, email} = req.body
 
   try {
-    const meet = await MeetingCode.findOne({ roomId: roomId, roomPassword: roomPassword})
+    const meet = await MeetingCode.findOne({ roomId: roomId, })
     if (meet == null){
       throw console.error("find error")
     }
