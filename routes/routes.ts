@@ -14,7 +14,7 @@ router.get("/api/calendar/dummy", async(req, res) => {
 
 router.get("/api/calendar/events", getEvents)
 
-router.post("/api/register", appendEmail)
+router.post("/api/register", createMeeting)
 
 router.post("/api/login", passwordCheck)
 
