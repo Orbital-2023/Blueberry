@@ -129,6 +129,7 @@ export const passwordCheck = async (req: Request, res: Response) => {
 
   const check = await MeetingCode.find({ roomId: roomId, roomPassword: roomPassword})
 
+  console.log(check)
   if (check.length != 0) {
     res.status(200).json("success")
   }
@@ -138,4 +139,25 @@ export const passwordCheck = async (req: Request, res: Response) => {
 
 export const getHello = (req: Request, res: Response) => {
   res.json("Hello world")
+}
+
+// appends an email in the body into the database given the right roomId and passoword
+export const appendEmail =  async (req: Request, res: Response) => {
+
+  const {roomId, roomPassword, email} = req.body
+
+  try {
+    const meet = await MeetingCode.findOne({ roomId: roomId, roomPassword: roomPassword})
+    if (meet == null){
+      throw console.error("find error")
+    }
+    const comma = ", "
+    meet.emails = meet?.emails.concat(comma, email)
+    meet.save()
+
+    res.status(200).json("Success")
+  } catch (error: any) { // will change later
+      res.status(400).json({error: error.message})
+  }
+
 }
