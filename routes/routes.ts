@@ -14,8 +14,6 @@ router.get("/api/calendar/dummy", async(req, res) => {
 
 router.get("/api/calendar/raw", getRaw)
 
-router.post("/api/meeting/create", createMeeting) // deprecate later
-
 router.post("/api/register", createMeeting)
 
 router.post("/api/login", passwordCheck)
