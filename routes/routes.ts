@@ -1,7 +1,7 @@
 import express from "express"
 const router = express.Router()
 import { dummyData } from "..";
-import { appendEmail, createMeeting, deprecatedGetEvents, getHello, getEvents, passwordCheck } from "../controllers/controllers";
+import { appendEmail, createMeeting, deprecatedGetEvents, getHello, getEvents, passwordCheck, timeUpdate } from "../controllers/controllers";
 
 // routes
 router.get("/api/hello", getHello)
@@ -19,5 +19,7 @@ router.post("/api/register", createMeeting)
 router.post("/api/login", passwordCheck)
 
 router.post("/api/meeting/append", appendEmail)
+
+router.post("/api/meeting/timeupdate", timeUpdate)
 
 export default router
