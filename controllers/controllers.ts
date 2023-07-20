@@ -159,7 +159,7 @@ export const appendEmail =  async (req: Request, res: Response) => {
     meet.emails = meet?.emails.concat(comma, email)
     meet.save()
 
-    res.status(200).json("Email appended!")
+    res.status(200).json(await MeetingCode.findOne({ roomId: roomId, }))
   } catch (error: any) { // will change later
       res.status(400).json({error: error.message})
   }
