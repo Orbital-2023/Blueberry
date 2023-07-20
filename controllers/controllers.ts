@@ -138,8 +138,8 @@ export const getEvents = async (req: Request, res: Response) => {
 
   const requestBody = {
     "items": items,
-    "timeMin": startDate,
-    "timeMax": endDate,
+    "timeMin": convertToRFC3339(startDate as string),
+    "timeMax": convertToRFC3339(endDate as string),
     "timeZone": "Asia/Singapore"
   }
 
