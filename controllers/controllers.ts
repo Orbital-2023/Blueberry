@@ -15,6 +15,20 @@ interface BusySchedule {
   };
 }
 
+function convertToRFC3339(dateString: string): string | null {
+  const dateRegex = /^(\d{4})-(\d{2})-(\d{2})$/;
+  const match = dateString.match(dateRegex);
+
+  if (!match) {
+    return null; // Invalid input format, return null or throw an error based on your preference.
+  }
+
+  const [_, year, month, day] = match;
+  const rfc3339String = `${year}-${month}-${day}T00:00:00.000Z`;
+
+  return rfc3339String;
+}
+
 function formatTime(timeStr: string): string {
   const time = new Date(timeStr);
   return time.toLocaleString('en-US', { hour: 'numeric', hour12: true, timeZone: 'UTC'}).toLowerCase().toLowerCase().replace(/\s/g, '');
