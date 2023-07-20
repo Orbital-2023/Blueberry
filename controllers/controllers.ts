@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { MeetingCodeModel as MeetingCode }  from "../models/MeetingCode.model";
+import { IMeetCode, MeetingCodeModel as MeetingCode }  from "../models/MeetingCode.model";
 import { google } from 'googleapis';
 import { Error } from "mongoose";
 import MagicCalculation from "./helperFn";
@@ -109,18 +109,37 @@ export const deprecatedGetEvents = async (req: Request, res: Response) => {
 }
 
 export const getEvents = async (req: Request, res: Response) => {
-  const emails = process.env.TEST_EMAILS!.split(", ");
+  const {roomId} = req.body
 
-  const items = emails.map((email) => {
-      return {
-        id: email,
-      };
-  });
+  let items
+  let startDate 
+  let endDate
+  try {
+    const meet = await MeetingCode.findOne({ roomId: roomId, })
+    if (meet == null){
+      throw console.error("find error")
+    }
+
+    const emails = meet.emails.split(", ");
+    
+    startDate = meet?.startDate ?? "2023-06-26T22:42:59+08:00"
+    endDate = meet?.endDate ?? "2023-07-02T22:42:59+08:00"
+
+    items = emails.map((email) => {
+    return {
+      id: email,
+    };
+
+});
+  } catch (error: any) { // will change later
+      res.status(400).json({error: error.message})
+  }
+
 
   const requestBody = {
     "items": items,
-    "timeMin": "2023-06-26T22:42:59+08:00",
-    "timeMax": "2023-07-02T22:42:59+08:00",
+    "timeMin": startDate,
+    "timeMax": endDate,
     "timeZone": "Asia/Singapore"
   }
 
