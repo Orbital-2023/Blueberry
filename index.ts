@@ -4,7 +4,7 @@ import routes from './routes/routes'
 
 dotenv.config()
 
-const app: Express = express()
+export const app: Express = express()
 const port = process.env.PORT
 const credentials = process.env.CREDENTIALS
 const { google } = require('googleapis')
