@@ -190,7 +190,7 @@ export const passwordCheck = async (req: Request, res: Response) => {
 
 // trial function
 export const getHello = (req: Request, res: Response) => {
-  res.json('Hello world')
+  res.status(200).json('Hello world')
 }
 
 // appends an email in the body into the database given the right roomId and passoword
