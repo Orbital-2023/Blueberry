@@ -12,7 +12,7 @@ router.get("/api/calendar/dummy", async(req, res) => {
   res.json(dummyData);
 });
 
-router.get("/api/calendar/events", getEvents)
+router.post("/api/calendar/events", getEvents)
 
 router.post("/api/register", createMeeting)
 
