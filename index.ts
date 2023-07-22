@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from 'express'
+import express, { Express } from 'express'
 import dotenv from 'dotenv'
 import routes from './routes/routes'
 
@@ -15,9 +15,6 @@ const oauth2Client = new google.auth.OAuth2(credentials)
 
 google.options({ auth: oauth2Client })
 
-const calendar = google.calendar({
-  version: 'v3',
-})
 
 app.use(cors({
     origin: ['https://frontend-v2-nu-fawn.vercel.app', 'http://localhost:3000/']
