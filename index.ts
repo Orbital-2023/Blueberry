@@ -8,7 +8,6 @@ export const app: Express = express()
 const port = process.env.PORT
 const credentials = process.env.CREDENTIALS
 const { google } = require('googleapis')
-const fetch = require('node-fetch')
 const mongoose = require('mongoose')
 
 const oauth2Client = new google.auth.OAuth2(credentials)
