@@ -9,6 +9,7 @@ const port = process.env.PORT
 const credentials = process.env.CREDENTIALS
 const { google } = require('googleapis')
 const mongoose = require('mongoose')
+const cors = require('cors');
 
 const oauth2Client = new google.auth.OAuth2(credentials)
 
@@ -18,6 +19,9 @@ const calendar = google.calendar({
   version: 'v3',
 })
 
+app.use(cors({
+    origin: ['https://frontend-v2-nu-fawn.vercel.app', 'http://localhost:3000/']
+}));
 app.use(express.json())
 app.use('/', routes)
 
